@@ -1,0 +1,13 @@
+services:
+  frontend:
+    build: ./frontend
+    restart: always
+    ports:
+      - "3000:3000"
+  reverse_proxy:
+    build: ./nginx
+    restart: always
+    ports:
+      - "80:80"
+    depends_on:
+      - frontend
