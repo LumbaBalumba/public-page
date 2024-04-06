@@ -15,7 +15,7 @@ func main() {
 
 	mux.HandleFunc("/favicon.ico", func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "image/x-icon; charset=utf-8")
-		http.ServeFile(w, r, "favicon.ico")
+		http.ServeFile(w, r, "static/img/favicon.ico")
 	})
 
 	mux.Handle("/static/", http.StripPrefix("/static/", fs))
