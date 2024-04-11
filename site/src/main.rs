@@ -19,6 +19,11 @@ async fn sites() -> impl Responder {
         .body(body)
 }
 
+#[get("/favicon.ico")]
+async fn favicon() -> actix_web::Result<actix_files::NamedFile> {
+    Ok(actix_files::NamedFile::open("static/img/favicon.ico")?)
+}
+
 #[actix_web::main]
 async fn main() -> Result<()> {
     HttpServer::new(|| {
@@ -26,6 +31,7 @@ async fn main() -> Result<()> {
             .service(Files::new("/static", "static/").show_files_listing())
             .service(index)
             .service(sites)
+            .service(favicon)
     })
     .bind("0.0.0.0:8080")?
     .run()
