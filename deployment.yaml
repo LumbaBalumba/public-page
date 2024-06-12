@@ -15,6 +15,7 @@ spec:
       containers:
         - name: public-page
           image: lumbabalumba/public-page:0.1.0
+          imagePullPolicy: IfNotPresent
           resources:
             limits:
               memory: "256Mi"
