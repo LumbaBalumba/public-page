@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: public-page-app
+spec:
+  replicas: 5
+  selector:
+    matchLabels:
+      app: public-page
+  template:
+    metadata:
+      labels:
+        app: public-page
+    spec:
+      containers:
+        - name: public-page
+          image: lumbabalumba/public-page:0.1.0
+          resources:
+            limits:
+              memory: "256Mi"
+              cpu: "500m"
+          ports:
+            - containerPort: 8080
