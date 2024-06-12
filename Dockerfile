@@ -8,7 +8,6 @@ COPY Cargo.toml Cargo.lock ./
 COPY src src
 COPY static static
 COPY templates templates
-COPY Rocket.toml Rocket.toml
 RUN cargo build --target x86_64-unknown-linux-musl --release
 
 FROM alpine:3.20
@@ -16,7 +15,6 @@ FROM alpine:3.20
 COPY --from=builder /app/target/x86_64-unknown-linux-musl/release/public-webpage /usr/local/bin/public-webpage
 COPY --from=builder /app/static /app/static
 COPY --from=builder /app/templates /app/templates
-COPY --from=builder /app/Rocket.toml /app/Rocket.toml
 
 ENV ROCKET_ADDRESS=0.0.0.0
 ENV ROCKET_PORT=8080
