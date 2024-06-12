@@ -30,3 +30,6 @@
 /target
 LICENSE
 README.md
+README.Docker.md
+Cargo.lock
+
