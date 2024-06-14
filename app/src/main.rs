@@ -1,5 +1,5 @@
 use rocket::{
-    fs::{relative, FileServer, NamedFile},
+    fs::{FileServer, NamedFile},
     get, launch, routes,
 };
 
