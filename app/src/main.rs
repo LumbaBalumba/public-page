@@ -2,10 +2,11 @@ use rocket::{
     fs::{FileServer, NamedFile},
     get, launch, routes,
 };
+use rocket_dyn_templates::{Template, context};
 
 #[get("/")]
-async fn index() -> Option<NamedFile> {
-    NamedFile::open("templates/index.html").await.ok()
+async fn index() -> Template {
+    Template::render("index", context! {})
 }
 
 #[get("/favicon.ico")]
@@ -18,4 +19,5 @@ fn rocket() -> _ {
     rocket::build()
         .mount("/", routes![index, favicon])
         .mount("/static", FileServer::from("static"))
+        .attach(Template::fairing())
 }
