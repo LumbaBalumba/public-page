@@ -5,17 +5,17 @@ use rocket::{
 
 #[get("/")]
 async fn index() -> Option<NamedFile> {
-    NamedFile::open("/app/templates/index.html").await.ok()
+    NamedFile::open("templates/index.html").await.ok()
 }
 
 #[get("/favicon.ico")]
 async fn favicon() -> Option<NamedFile> {
-    NamedFile::open("/app/static/img/favicon.ico").await.ok()
+    NamedFile::open("static/img/favicon.ico").await.ok()
 }
 
 #[launch]
 fn rocket() -> _ {
     rocket::build()
         .mount("/", routes![index, favicon])
-        .mount("/static", FileServer::from("/app/static"))
+        .mount("/static", FileServer::from("static"))
 }
