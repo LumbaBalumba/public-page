@@ -2,7 +2,7 @@ use rocket::{
     fs::{FileServer, NamedFile},
     get, launch, routes,
 };
-use rocket_dyn_templates::{Template, context};
+use rocket_dyn_templates::{context, Template};
 
 #[get("/")]
 async fn index() -> Template {
