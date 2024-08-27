@@ -1,6 +1,11 @@
 pipeline {
     agent any
     stages {
+        stage('Stop') {
+            steps {
+                sh 'docker compose down'
+            }
+        }
         stage('Build') {
             steps {
                 sh 'echo "Building..."'
