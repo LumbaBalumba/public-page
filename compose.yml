@@ -1,8 +1,6 @@
 services:
   app:
     build: ./app
-    expose:
-      - 8080
     deploy:
       replicas: 5
       resources:
