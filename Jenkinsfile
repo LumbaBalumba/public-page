@@ -7,11 +7,6 @@ pipeline {
                 sh 'docker compose build'
             }
         }
-        stage('Testing') {
-            steps {
-                sh 'echo "Testing..."'
-            }
-        }
         stage('Runnig') {
             steps {
                 sh 'echo "Running..."'
