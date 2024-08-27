@@ -3,6 +3,7 @@ pipeline {
     stages {
         stage('Stop') {
             steps {
+                sh 'Stopping...'
                 sh 'docker compose down'
             }
         }
@@ -12,7 +13,7 @@ pipeline {
                 sh 'docker compose build'
             }
         }
-        stage('Runnig') {
+        stage('Run') {
             steps {
                 sh 'echo "Running..."'
                 sh 'docker compose up -d'
