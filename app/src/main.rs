@@ -1,23 +1,9 @@
-use rocket::{
-    fs::{FileServer, NamedFile},
-    get, launch, routes,
-};
-use rocket_dyn_templates::{context, Template};
+use rocket::launch;
 
-#[get("/")]
-async fn index() -> Template {
-    Template::render("index", context! {})
-}
-
-#[get("/favicon.ico")]
-async fn favicon() -> Option<NamedFile> {
-    NamedFile::open("static/img/favicon.ico").await.ok()
-}
+pub mod app;
+mod tests;
 
 #[launch]
 fn rocket() -> _ {
-    rocket::build()
-        .mount("/", routes![index, favicon])
-        .mount("/static", FileServer::from("static"))
-        .attach(Template::fairing())
+    app::rocket()
 }
