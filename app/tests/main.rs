@@ -1,5 +1,2 @@
 #[cfg(test)]
-mod tests {
-    #[test]
-    fn test_index() {}
-}
+mod tests {}
