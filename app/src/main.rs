@@ -1,6 +1,8 @@
 use rocket::launch;
 
 pub mod app;
+
+#[cfg(test)]
 mod tests;
 
 #[launch]
