@@ -13,9 +13,9 @@ pipeline {
                 sh 'docker compose build'
             }
         }
-        stage('Run') {
+        stage('Deploy') {
             steps {
-                sh 'echo "Running..."'
+                sh 'echo "Deploying..."'
                 sh 'docker compose up -d'
             }
         }
