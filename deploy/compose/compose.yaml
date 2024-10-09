@@ -1,6 +1,6 @@
 services:
   app:
-    build: ./app
+    build: ../../app
     deploy:
       replicas: 5
       resources:
@@ -15,5 +15,5 @@ services:
     depends_on:
       - app
     volumes:
-      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ../../nginx/nginx.conf:/etc/nginx/nginx.conf
     restart: always
