@@ -10,7 +10,7 @@ pipeline {
         stage('Build') {
             steps {
                 sh 'echo "Building..."'
-                sh 'docker compose ./deploy/compose/compose.yaml build'
+                sh 'docker compose -f ./deploy/compose/compose.yaml build'
             }
         }
         stage('Deploy') {
