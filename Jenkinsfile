@@ -4,19 +4,19 @@ pipeline {
         stage('Stop') {
             steps {
                 sh 'echo "Stopping..."'
-                sh 'docker compose -f ./deploy/compose/compose.yaml down'
+                sh 'docker compose down'
             }
         }
         stage('Build') {
             steps {
                 sh 'echo "Building..."'
-                sh 'docker compose -f ./deploy/compose/compose.yaml build'
+                sh 'docker compose build'
             }
         }
         stage('Deploy') {
             steps {
                 sh 'echo "Deploying..."'
-                sh 'docker compose -f ./deploy/compose/compose.yaml up -d'
+                sh 'docker compose up -d'
             }
         }
     }
