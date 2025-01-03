@@ -5,6 +5,6 @@ services:
       - 80:80
     volumes:
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
-      - ./templates:/data/templates
-      - ./static:/data/static
+      - ./templates:/etc/nginx/html:ro
+      - ./static:/etc/nginx/static:ro
     restart: always
