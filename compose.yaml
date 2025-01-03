@@ -1,4 +1,55 @@
 services:
+  sso-db:
+    image: postgres:16.3-alpine3.18
+    command:
+      - postgres
+      - -c
+      - shared_buffers=1GB
+      - -c
+      - effective_cache_size=4GB
+      - -c
+      - work_mem=128MB
+      - -c
+      - maintenance_work_mem=512MB
+      - -c
+      - random_page_cost=1.1
+      - -c
+      - temp_file_limit=10GB
+      - -c
+      - log_min_duration_statement=200ms
+      - -c
+      - idle_in_transaction_session_timeout=10s
+      - -c
+      - lock_timeout=1s
+      - -c
+      - statement_timeout=60s
+      - -c
+      - shared_preload_libraries=pg_stat_statements
+      - -c
+      - pg_stat_statements.max=10000
+      - -c
+      - pg_stat_statements.track=all
+    volumes: [public-page-sso:/var/lib/postgresql/data]
+    env_file: [.env]
+    healthcheck:
+      test: [CMD-SHELL, pg_isready -U $POSTGRES_USER -d $POSTGRES_DB]
+      interval: 1s
+      timeout: 5s
+      retries: 10
+      start_period: 3s
+    restart: always
+    deploy:
+      resources:
+        limits:
+          cpus: "2"
+          memory: 2G
+  sso:
+    build: ./sso
+    restart: always
+    env_file: .env
+    depends_on:
+      sso-db:
+        condition: service_healthy
   nginx:
     image: nginx:latest
     ports:
@@ -7,3 +58,5 @@ services:
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
       - ./html:/var/www/html
     restart: always
+volumes:
+  public-page-sso:
