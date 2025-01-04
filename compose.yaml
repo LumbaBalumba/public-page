@@ -35,7 +35,7 @@ services:
       - pg_stat_statements.max=10000
       - -c
       - pg_stat_statements.track=all
-    volumes: [public-page-auth:/var/lib/postgresql/data]
+    volumes: [auth:/var/lib/postgresql/data]
     healthcheck:
       test: [CMD-SHELL, pg_isready -U $POSTGRES_USER -d auth-db]
       interval: 1s
@@ -107,7 +107,7 @@ services:
       - pg_stat_statements.max=10000
       - -c
       - pg_stat_statements.track=all
-    volumes: [public-page-streaming:/var/lib/postgresql/data]
+    volumes: [streaming:/var/lib/postgresql/data]
     healthcheck:
       test: [CMD-SHELL, pg_isready -U $POSTGRES_USER -d streaming-db]
       interval: 1s
@@ -123,5 +123,5 @@ services:
     ports:
       - 5432:5432
 volumes:
-  public-page-auth:
-  public-page-streaming:
+  auth:
+  streaming:
