@@ -3,7 +3,6 @@ pipeline {
     environment {
         POSTGRES_USER = credentials('jenkins-i3alumba.ru-auth-postgres-user')
         POSTGRES_PASSWORD = credentials('jenkins-i3alumba.ru-auth-postgres-user')
-        POSTGRES_DB = credentials('jenkins-i3alumba.ru-auth-postgres-db')
         DJANGO_SECRET_KEY = credentials('jenkins-i3alumba.ru-auth-django-secret-key')
     }
     stages {
