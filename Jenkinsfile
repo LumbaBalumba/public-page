@@ -1,5 +1,10 @@
 pipeline {
     agent any
+    environment {
+        POSTGRES_USER = credentials('jenkins-i3alumba.ru-auth-postgres-user')
+        POSTGRES_PASSWORD = credentials('jenkins-i3alumba.ru-auth-postgres-user')
+        DJANGO_SECRET_KEY = credentials('jenkins-i3alumba.ru-auth-django-secret-key')
+    }
     stages {
         stage('Stop') {
             steps {
