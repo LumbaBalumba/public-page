@@ -48,7 +48,6 @@ services:
     volumes: [auth_data:/var/lib/postgresql/data]
     environment:
       POSTGRES_DB: auth
-    env_file: [.env]
     healthcheck:
       test: [CMD-SHELL, pg_isready -U $POSTGRES_USER -d $POSTGRES_DB]
       interval: 1s
@@ -64,7 +63,6 @@ services:
   auth:
     build: auth
     restart: always
-    env_file: .env
     depends_on:
       auth_db:
         condition: service_healthy
