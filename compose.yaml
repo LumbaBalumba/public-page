@@ -6,9 +6,15 @@ services:
       - 443:443
     volumes:
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
-      - ./html:/var/www/html
-      - ./data:/var/www/data
+      - ./html:/var/www/html:ro
+      - ./data:/var/www/data:ro
+      - ./certbot/www:/var/www/certbot/:ro
     restart: always
+  certbot:
+    image: certbot/certbot:latest
+    volumes:
+      - ./certbot/www:/var/www/certbot/:rw
+      - ./certbot/conf:/etc/letsencrypt/:rw
   auth_db:
     image: postgres:alpine
     command:
