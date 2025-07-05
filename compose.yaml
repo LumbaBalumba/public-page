@@ -46,6 +46,8 @@ services:
       - -c
       - pg_stat_statements.track=all
     volumes: [auth_data:/var/lib/postgresql/data]
+    environment:
+      POSTGRES_DB: auth
     env_file: [.env]
     healthcheck:
       test: [CMD-SHELL, pg_isready -U $POSTGRES_USER -d $POSTGRES_DB]
@@ -67,6 +69,8 @@ services:
       auth_db:
         condition: service_healthy
     volumes: [staticfiles:/app/staticfiles]
+    environment:
+      POSTGRES_DB: auth
 volumes:
   auth_data:
   staticfiles:
