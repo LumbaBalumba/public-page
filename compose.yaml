@@ -72,6 +72,38 @@ services:
       POSTGRES_USER: $POSTGRES_USER
       POSTGRES_PASSWORD: $POSTGRES_PASSWORD
       POSTGRES_DB: $POSTGRES_DB
+  gitlab:
+    image: gitlab/gitlab-ce:18.1.0-ce.0
+    container_name: gitlab
+    hostname: gitlab.local
+    restart: always
+    shm_size: "256m"
+    environment:
+      GITLAB_OMNIBUS_CONFIG: |
+        external_url 'http://gitlab.local'
+        gitlab_rails['gitlab_shell_ssh_port'] = 2222
+    # ports:
+    #   - "80:80" # HTTP
+    #   - "443:443" # HTTPS
+    #   - "2222:22" # SSH for Git
+    volumes:
+      - "gitlab_config:/etc/gitlab"
+      - "gitlab_logs:/var/log/gitlab"
+      - "gitlab_data:/var/opt/gitlab"
+
+  gitlab-runner:
+    image: gitlab/gitlab-runner:alpine
+    container_name: gitlab-runner
+    restart: always
+    depends_on:
+      - gitlab
+    volumes:
+      - "gitlab-runner_config:/etc/gitlab-runner"
+      - "/var/run/docker.sock:/var/run/docker.sock"
 volumes:
   auth_data:
   auth_staticfiles:
+  gitlab_config:
+  gitlab_logs:
+  gitlab_data:
+  gitlab-runner_config:
