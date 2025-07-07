@@ -8,6 +8,7 @@ services:
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
       - ./html:/var/www/html:ro
       - ./data:/var/www/data:ro
+      - auth_staticfiles:/app/auth/staticfiles
     restart: always
     depends_on:
       - auth
@@ -64,7 +65,7 @@ services:
     depends_on:
       auth_db:
         condition: service_healthy
-    volumes: [staticfiles:/app/staticfiles]
+    volumes: [auth_staticfiles:/app/staticfiles]
     environment:
       DJANGO_DEBUG: ""
       DJANGO_SECRET_KEY: $DJANGO_SECRET_KEY
