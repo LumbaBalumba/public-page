@@ -108,7 +108,7 @@ services:
       - minio_data:/data
     environment:
       MINIO_ROOT_USER: $MINIO_ROOT_USER
-      MINIOO_ROOT_PASSWORD: $MINIO_ROOT_PASSWORD
+      MINIO_ROOT_PASSWORD: $MINIO_ROOT_PASSWORD
     entrypoint: ["minio", "server", "/data", "--console-address", ":9001"]
 volumes:
   auth_data:
