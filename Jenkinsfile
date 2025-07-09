@@ -5,6 +5,8 @@ pipeline {
         POSTGRES_PASSWORD = credentials('jenkins-i3alumba.ru-auth-postgres-user')
         POSTGRES_DB = 'auth'
         DJANGO_SECRET_KEY = credentials('jenkins-i3alumba.ru-auth-django-secret-key')
+        MINIO_ROOT_USER = credentials('jenkins-i3alumba.ru-minio-root-username')
+        MINIO_ROOT_PASSWORD = credentials('jenkins-i3alumba.ru-minio-root-password')
     }
     stages {
         stage('Stop') {
