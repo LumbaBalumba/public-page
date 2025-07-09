@@ -105,7 +105,7 @@ services:
     ports:
       - "9001:9001"
     volumes:
-      - data:/data
+      - minio_data:/data
     environment:
       MINIO_ROOT_USER: $MINIO_ROOT_USER
       MINIOO_ROOT_PASSWORD: $MINIO_ROOT_PASSWORD
@@ -117,3 +117,4 @@ volumes:
   gitlab_logs:
   gitlab_data:
   gitlab-runner_config:
+  minio_data:
