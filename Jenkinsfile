@@ -9,6 +9,11 @@ pipeline {
         MINIO_ROOT_PASSWORD = credentials('jenkins-i3alumba.ru-minio-root-password')
     }
     stages {
+        stage ('Checkout') {
+            steps {
+                sh 'git checkout --force'
+            }
+        }
         stage('Stop') {
             steps {
                 sh 'echo "Stopping..."'
