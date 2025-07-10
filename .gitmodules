@@ -4,3 +4,6 @@
 [submodule "drive"]
 	path = drive
 	url = https://github.com/i3alumba/drive
+[submodule "dashboard"]
+	path = dashboard
+	url = https://github.com/i3alumba/dashboard
