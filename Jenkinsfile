@@ -1,5 +1,6 @@
 pipeline {
     agent any
+
     environment {
         POSTGRES_USER = credentials('jenkins-i3alumba.ru-auth-postgres-user')
         POSTGRES_PASSWORD = credentials('jenkins-i3alumba.ru-auth-postgres-user')
@@ -8,12 +9,18 @@ pipeline {
         MINIO_ROOT_USER = credentials('jenkins-i3alumba.ru-minio-root-username')
         MINIO_ROOT_PASSWORD = credentials('jenkins-i3alumba.ru-minio-root-password')
     }
+
+    options {
+        skipDefaultCheckout()
+    }
+
     stages {
-        stage ('Checkout') {
-            steps {
-                sh 'git checkout --force'
-            }
+        stage('Clean and Clone') {
+            deleteDir()
+
+            checkout scm
         }
+
         stage('Stop') {
             steps {
                 sh 'echo "Stopping..."'
