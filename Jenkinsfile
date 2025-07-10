@@ -10,18 +10,7 @@ pipeline {
         MINIO_ROOT_PASSWORD = credentials('jenkins-i3alumba.ru-minio-root-password')
     }
 
-    options {
-        skipDefaultCheckout()
-    }
-
     stages {
-        stage('Clean and Clone') {
-            steps {
-            deleteDir()
-            checkout scm
-            }
-        }
-
         stage('Stop') {
             steps {
                 sh 'echo "Stopping..."'
