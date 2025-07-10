@@ -16,9 +16,10 @@ pipeline {
 
     stages {
         stage('Clean and Clone') {
+            steps {
             deleteDir()
-
             checkout scm
+            }
         }
 
         stage('Stop') {
