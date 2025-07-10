@@ -78,6 +78,8 @@ services:
     hostname: gitlab.i3alumba.ru
     restart: always
     shm_size: "256m"
+    ports:
+      - "2222:2222"
     environment:
       GITLAB_OMNIBUS_CONFIG: |
         external_url 'http://gitlab.i3alumba.ru'
@@ -90,7 +92,6 @@ services:
       - "gitlab_config:/etc/gitlab"
       - "gitlab_logs:/var/log/gitlab"
       - "gitlab_data:/var/opt/gitlab"
-
   gitlab-runner:
     image: gitlab/gitlab-runner:alpine
     container_name: gitlab-runner
