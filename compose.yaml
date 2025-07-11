@@ -9,10 +9,35 @@ services:
       - ./html:/var/www/html:ro
       - ./data:/var/www/data:ro
       - auth_staticfiles:/app/auth/staticfiles
+      - ./letsencrypt:/etc/letsencrypt
+      - ./letsencrypt:/var/www/html/.well-known/acme-challenge
     restart: always
     depends_on:
       - auth
       - dashboard
+  certbot:
+    image: certbot/certbot:v2.8.0
+    volumes:
+      - ./letsencrypt:/etc/letsencrypt
+      - ./letsencrypt:/var/www/html/.well-known/acme-challenge
+    entrypoint: >
+      sh -c "\
+        certbot certonly \
+          --noninteractive \
+          --agree-tos \
+          --email $CERTBOT_EMAIL \
+          --webroot -w /var/www/html \
+          -d i3alumba.ru -d auth.i3alumba.ru \
+          -d www.i3alumba.ru -d gitlab.i3alumba.ru \
+          -d minio.i3alumba.ru \
+      && \
+        (while true; do \
+          sleep 12h; \
+          certbot renew \
+            --webroot -w /var/www/html \
+            --deploy-hook 'nginx -s reload'; \
+        done)"
+    restart: unless-stopped
   auth_db:
     image: postgres:alpine
     command:
