@@ -34,6 +34,7 @@ pipeline {
                 sh 'echo "Waiting for Certbot to issue/renew..."'
                 sh 'sleep 30'
             }
+        }
         stage('Reload Nginx') {
             steps {
               sh 'echo "Reloading Nginx with new certificates..."'
