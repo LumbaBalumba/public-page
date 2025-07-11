@@ -15,7 +15,7 @@ services:
     depends_on:
       - auth
       - certbot
-      - main
+      - dashboard
   certbot:
     image: certbot/certbot
     volumes:
