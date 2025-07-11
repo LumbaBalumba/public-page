@@ -14,6 +14,8 @@ services:
     restart: always
     depends_on:
       - auth
+      - certbot
+      - main
   certbot:
     image: certbot/certbot
     volumes:
@@ -25,8 +27,6 @@ services:
       --no-eff-email
       --email vlad.lazar.ik528@yandex.ru
       -d i3alumba.ru -d www.i3alumba.ru -d gitlab.i3alumba.ru -d auth.i3alumba.ru -d minio.i3alumba.ru -d main.i3alumba.ru"
-    depends_on:
-      - nginx
   auth_db:
     image: postgres:alpine
     command:
