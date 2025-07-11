@@ -29,5 +29,17 @@ pipeline {
                 sh 'docker compose up -d --remove-orphans'
             }
         }
+        stage('Wait for Certificates') {
+            steps {
+                sh 'echo "Waiting for Certbot to issue/renew..."'
+                sh 'sleep 30'
+            }
+        }
+        stage('Reload Nginx') {
+            steps {
+              sh 'echo "Reloading Nginx with new certificates..."'
+              sh 'docker compose exec nginx nginx -s reload'
+            }
+        }
     }
 }
