@@ -8,6 +8,7 @@ pipeline {
         DJANGO_SECRET_KEY = credentials('jenkins-i3alumba.ru-auth-django-secret-key')
         MINIO_ROOT_USER = credentials('jenkins-i3alumba.ru-minio-root-username')
         MINIO_ROOT_PASSWORD = credentials('jenkins-i3alumba.ru-minio-root-password')
+        CERTBOT_EMAIL = credentials('jenkins-i3alumba.ru-certbot-email')
     }
     stages {
         stage('Stop') {
