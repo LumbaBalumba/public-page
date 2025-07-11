@@ -14,7 +14,6 @@ services:
     restart: always
     depends_on:
       - auth
-      - certbot
       - dashboard
   certbot:
     image: certbot/certbot
