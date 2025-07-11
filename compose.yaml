@@ -9,23 +9,10 @@ services:
       - ./html:/var/www/html:ro
       - ./data:/var/www/data:ro
       - auth_staticfiles:/app/auth/staticfiles
-      - letsencrypt:/etc/letsencrypt
-      - letsencrypt-data:/data/letsencrypt
     restart: always
     depends_on:
       - auth
       - dashboard
-  certbot:
-    image: certbot/certbot
-    volumes:
-      - letsencrypt:/etc/letsencrypt
-      - letsencrypt-data:/data/letsencrypt
-    entrypoint: sh -c "certbot certonly --webroot
-      --webroot-path=/data/letsencrypt/
-      --agree-tos
-      --no-eff-email
-      --email vlad.lazar.ik528@yandex.ru
-      -d i3alumba.ru -d www.i3alumba.ru -d gitlab.i3alumba.ru -d auth.i3alumba.ru -d minio.i3alumba.ru -d main.i3alumba.ru"
   auth_db:
     image: postgres:alpine
     command:
@@ -98,10 +85,6 @@ services:
       GITLAB_OMNIBUS_CONFIG: |
         external_url 'http://gitlab.i3alumba.ru'
         gitlab_rails['gitlab_shell_ssh_port'] = 2222
-    # ports:
-    #   - "80:80" # HTTP
-    #   - "443:443" # HTTPS
-    #   - "2222:22" # SSH for Git
     volumes:
       - "gitlab_config:/etc/gitlab"
       - "gitlab_logs:/var/log/gitlab"
