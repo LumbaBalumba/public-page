@@ -9,23 +9,10 @@ services:
       - ./html:/var/www/html:ro
       - ./data:/var/www/data:ro
       - auth_staticfiles:/app/auth/staticfiles
-      - letsencrypt:/etc/letsencrypt
-      - letsencrypt-data:/data/letsencrypt
     restart: always
     depends_on:
       - auth
       - dashboard
-  certbot:
-    image: certbot/certbot
-    volumes:
-      - letsencrypt:/etc/letsencrypt
-      - letsencrypt-data:/data/letsencrypt
-    entrypoint: sh -c "certbot certonly --webroot
-      --webroot-path=/data/letsencrypt/
-      --agree-tos
-      --no-eff-email
-      --email vlad.lazar.ik528@yandex.ru
-      -d i3alumba.ru -d www.i3alumba.ru -d gitlab.i3alumba.ru -d auth.i3alumba.ru -d minio.i3alumba.ru -d main.i3alumba.ru"
   auth_db:
     image: postgres:alpine
     command:
