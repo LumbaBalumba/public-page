@@ -85,10 +85,6 @@ services:
       GITLAB_OMNIBUS_CONFIG: |
         external_url 'http://gitlab.i3alumba.ru'
         gitlab_rails['gitlab_shell_ssh_port'] = 2222
-    # ports:
-    #   - "80:80" # HTTP
-    #   - "443:443" # HTTPS
-    #   - "2222:22" # SSH for Git
     volumes:
       - "gitlab_config:/etc/gitlab"
       - "gitlab_logs:/var/log/gitlab"
