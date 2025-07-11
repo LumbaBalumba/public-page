@@ -10,6 +10,10 @@ pipeline {
         MINIO_ROOT_PASSWORD = credentials('jenkins-i3alumba.ru-minio-root-password')
     }
 
+    triggers {
+        cron('H 2 * * *')
+    }
+
     stages {
         stage('Stop') {
             steps {
@@ -27,6 +31,14 @@ pipeline {
             steps {
                 sh 'echo "Deploying..."'
                 sh 'docker compose up -d --remove-orphans'
+            }
+        }
+        stage('Renew certs') {
+            steps {
+                sh '''
+                    docker compose run --rm certbot renew --webroot --webroot-path=/data/letsencrypt
+                    docker compose exec nginx nginx -s reload
+                    '''
             }
         }
     }
