@@ -13,6 +13,8 @@ services:
     depends_on:
       - auth
       - dashboard
+      - minio
+      - gitlab
   auth_db:
     image: postgres:alpine
     command:
