@@ -121,9 +121,7 @@ services:
       REGISTRY_AUTH_HTPASSWD_PATH: /auth/registry.password
       REGISTRY_STORAGE_FILESYSTEM_ROOTDIRECTORY: /data
     volumes:
-      # Монтируем файл паролей.
-      - ./registry/registry.password:/auth/registry.password
-      # Монтируем директорию с данными.
+      - ./registry/registry.passwd:/auth/registry.password
       - registry_data:/data
     ports:
       - 5000
