@@ -135,3 +135,4 @@ volumes:
   gitlab_data:
   gitlab-runner_config:
   minio_data:
+  registry_data:
