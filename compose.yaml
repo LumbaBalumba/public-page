@@ -113,6 +113,20 @@ services:
   dashboard:
     build: dashboard
     restart: always
+  registry:
+    image: registry:latest
+    environment:
+      REGISTRY_AUTH: htpasswd
+      REGISTRY_AUTH_HTPASSWD_REALM: Registry Realm
+      REGISTRY_AUTH_HTPASSWD_PATH: /auth/registry.password
+      REGISTRY_STORAGE_FILESYSTEM_ROOTDIRECTORY: /data
+    volumes:
+      # Монтируем файл паролей.
+      - ./registry/registry.password:/auth/registry.password
+      # Монтируем директорию с данными.
+      - registry_data:/data
+    ports:
+      - 5000
 volumes:
   auth_data:
   auth_staticfiles:
