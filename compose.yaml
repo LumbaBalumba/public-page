@@ -1,20 +1,15 @@
+---
 services:
   nginx:
     image: nginx:latest
-    ports:
-      - 80:80
-      - 443:443
+    ports: [80:80, 443:443]
     volumes:
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
       - ./html:/var/www/html:ro
       - ./data:/var/www/data:ro
       - auth_staticfiles:/app/auth/staticfiles
     restart: always
-    depends_on:
-      - auth
-      - dashboard
-      - minio
-      - gitlab
+    depends_on: [auth, dashboard, minio, gitlab]
   auth_db:
     image: postgres:alpine
     command:
@@ -60,7 +55,7 @@ services:
     deploy:
       resources:
         limits:
-          cpus: "2"
+          cpus: '2'
           memory: 8G
   auth:
     build: auth
@@ -70,7 +65,7 @@ services:
         condition: service_healthy
     volumes: [auth_staticfiles:/app/staticfiles]
     environment:
-      DJANGO_DEBUG: ""
+      DJANGO_DEBUG: ''
       DJANGO_SECRET_KEY: $DJANGO_SECRET_KEY
       POSTGRES_USER: $POSTGRES_USER
       POSTGRES_PASSWORD: $POSTGRES_PASSWORD
@@ -80,36 +75,32 @@ services:
     container_name: gitlab
     hostname: gitlab.i3alumba.ru
     restart: always
-    shm_size: "256m"
-    ports:
-      - "2222:2222"
+    shm_size: 256m
+    ports: [2222:2222]
     environment:
       GITLAB_OMNIBUS_CONFIG: |
         external_url 'http://gitlab.i3alumba.ru'
         gitlab_rails['gitlab_shell_ssh_port'] = 2222
     volumes:
-      - "gitlab_config:/etc/gitlab"
-      - "gitlab_logs:/var/log/gitlab"
-      - "gitlab_data:/var/opt/gitlab"
+      - gitlab_config:/etc/gitlab
+      - gitlab_logs:/var/log/gitlab
+      - gitlab_data:/var/opt/gitlab
   gitlab-runner:
     image: gitlab/gitlab-runner:alpine
     container_name: gitlab-runner
     restart: always
-    depends_on:
-      - gitlab
+    depends_on: [gitlab]
     volumes:
-      - "gitlab-runner_config:/etc/gitlab-runner"
-      - "/var/run/docker.sock:/var/run/docker.sock"
+      - gitlab-runner_config:/etc/gitlab-runner
+      - /var/run/docker.sock:/var/run/docker.sock
   minio:
     image: minio/minio:RELEASE.2023-05-18T00-05-36Z
-    ports:
-      - "9000:9000"
-    volumes:
-      - minio_data:/data
+    ports: [9000:9000]
+    volumes: [minio_data:/data]
     environment:
       MINIO_ROOT_USER: $MINIO_ROOT_USER
       MINIO_ROOT_PASSWORD: $MINIO_ROOT_PASSWORD
-    entrypoint: ["minio", "server", "/data", "--console-address", ":9001"]
+    entrypoint: [minio, server, /data, --console-address, :9001]
   dashboard:
     build: dashboard
     restart: always
@@ -123,8 +114,16 @@ services:
     volumes:
       - ./registry/registry.passwd:/auth/registry.password
       - registry_data:/data
-    ports:
-      - 5000
+    ports: [5000]
+  drive:
+    image: docker.io/personaldrive/personaldrive
+    container_name: personal-drive
+    restart: always
+    volumes:
+      - drive-data:/var/www/html/personal-drive-storage-folder
+      - drive-db:/var/www/html/personal-drive/database/db
+    environment:
+      DISABLE_HTTPS: true
 volumes:
   auth_data:
   auth_staticfiles:
@@ -134,3 +133,5 @@ volumes:
   gitlab-runner_config:
   minio_data:
   registry_data:
+  drive-data:
+  drive-db:
