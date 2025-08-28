@@ -117,13 +117,12 @@ services:
     ports: [5000]
   drive:
     image: docker.io/personaldrive/personaldrive
-    container_name: personal-drive
     restart: always
     volumes:
       - drive-data:/var/www/html/personal-drive-storage-folder
       - drive-db:/var/www/html/personal-drive/database/db
     environment:
-      DISABLE_HTTPS: true
+      DISABLE_HTTPS: false
 volumes:
   auth_data:
   auth_staticfiles:
