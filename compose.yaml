@@ -105,6 +105,7 @@ services:
   dashboard:
     build: dashboard
     restart: always
+    depends_on: [auth, minio, gitlab, drive]
   registry:
     image: registry:latest
     restart: always
